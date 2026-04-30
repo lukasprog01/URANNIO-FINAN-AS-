@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# Dados sensíveis e locais
+app_config.json
+finance_control.db
+*.db
+
+# Credenciais Firebase
+*service-account*.json
+*serviceAccount*.json
+*firebase-adminsdk*.json
+
+# Ambientes virtuais
+venv/
+.venv/
+env/
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.user
+
+# Sistema
+Thumbs.db
+.DS_Store
