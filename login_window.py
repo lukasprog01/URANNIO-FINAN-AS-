@@ -463,14 +463,25 @@ class LoginWindow(QMainWindow):
         result = self.db.create_user(username, email, password)
         if result["success"]:
             is_admin = result.get("role") == "admin"
-            suffix = " como Administrador" if is_admin else ""
-            self.reg_success.setText(f"✓ Conta criada{suffix}! Redirecionando para o login...")
-            self.reg_success.show()
-            self.reg_username.clear()
-            self.reg_email.clear()
-            self.reg_password.clear()
-            self.reg_confirm.clear()
-            QTimer.singleShot(1500, lambda: self.stack.setCurrentIndex(0))
+            if self.first_run:
+                # Primeiro acesso: entra no sistema automaticamente
+                self.reg_success.setText("✓ Administrador criado! Entrando no sistema...")
+                self.reg_success.show()
+                auth = self.db.authenticate_user(username, password)
+                if auth["success"]:
+                    QTimer.singleShot(900, lambda: self.login_successful.emit(auth["user"]))
+                else:
+                    # Fallback: vai para login manual
+                    QTimer.singleShot(900, lambda: self.stack.setCurrentIndex(0))
+            else:
+                suffix = " como Administrador" if is_admin else ""
+                self.reg_success.setText(f"✓ Conta criada{suffix}! Redirecionando para o login...")
+                self.reg_success.show()
+                self.reg_username.clear()
+                self.reg_email.clear()
+                self.reg_password.clear()
+                self.reg_confirm.clear()
+                QTimer.singleShot(1500, lambda: self.stack.setCurrentIndex(0))
         else:
             self._show_reg_error(result["error"])
 

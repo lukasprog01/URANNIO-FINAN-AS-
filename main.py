@@ -14,13 +14,21 @@ def main():
 
     from login_window import LoginWindow
     login_win = LoginWindow(db)
+    app._login_win = login_win  # mantém referência viva
 
     def on_login(user: dict):
-        login_win.close()
-        from main_window import MainWindow
-        main_win = MainWindow(db, user)
-        main_win.show()
-        app._main_win = main_win  # keep reference
+        try:
+            from main_window import MainWindow
+            main_win = MainWindow(db, user)
+            main_win.show()
+            app._main_win = main_win  # mantém referência viva
+            login_win.close()
+        except Exception as e:
+            from PyQt6.QtWidgets import QMessageBox
+            QMessageBox.critical(
+                None, "Erro ao abrir o sistema",
+                f"Não foi possível abrir a janela principal:\n\n{e}"
+            )
 
     login_win.login_successful.connect(on_login)
     login_win.show()
