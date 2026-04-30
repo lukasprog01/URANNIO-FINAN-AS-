@@ -1,11 +1,23 @@
+import os
 import sqlite3
 import hashlib
 import secrets
 from datetime import datetime
+from pathlib import Path
+
+
+def _app_data_dir() -> Path:
+    base = Path(os.environ.get("APPDATA", Path.home()))
+    d = base / "URANNIO Finanças"
+    d.mkdir(parents=True, exist_ok=True)
+    return d
+
+
+_DEFAULT_DB = str(_app_data_dir() / "finance_control.db")
 
 
 class Database:
-    def __init__(self, db_path="finance_control.db"):
+    def __init__(self, db_path=_DEFAULT_DB):
         self.db_path = db_path
         self._firebase = None   # set via set_firebase_manager()
 

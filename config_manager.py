@@ -1,7 +1,16 @@
 import json
 import os
+from pathlib import Path
 
-CONFIG_FILE = "app_config.json"
+
+def _app_data_dir() -> Path:
+    base = Path(os.environ.get("APPDATA", Path.home()))
+    d = base / "URANNIO Finanças"
+    d.mkdir(parents=True, exist_ok=True)
+    return d
+
+
+CONFIG_FILE = str(_app_data_dir() / "app_config.json")
 
 
 class ConfigManager:
