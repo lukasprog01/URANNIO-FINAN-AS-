@@ -10,7 +10,7 @@ echo.
 
 REM ── Verificar PyInstaller ──────────────────────────────────────────────────
 echo [1/4] Verificando dependencias...
-pip install pyinstaller --quiet
+python -m pip install pyinstaller --quiet
 if errorlevel 1 (
     echo  ERRO: Falha ao instalar PyInstaller.
     pause & exit /b 1
@@ -27,7 +27,7 @@ REM ── Build do app principal ───────────────�
 echo [3/4] Compilando URANNIO.exe...
 echo        (pode levar alguns minutos)
 echo.
-pyinstaller urannio.spec --noconfirm --clean
+python -m PyInstaller urannio.spec --noconfirm --clean
 if errorlevel 1 (
     echo.
     echo  ERRO ao compilar URANNIO.exe
@@ -41,7 +41,7 @@ REM ── Build do instalador ────────────────�
 echo [4/4] Compilando instalador URANNIO_Setup_v1.0.exe...
 echo        (pode levar alguns minutos)
 echo.
-pyinstaller installer.spec --noconfirm --clean
+python -m PyInstaller installer.spec --noconfirm --clean
 if errorlevel 1 (
     echo.
     echo  ERRO ao compilar o instalador
