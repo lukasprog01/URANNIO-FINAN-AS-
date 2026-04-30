@@ -17,6 +17,11 @@ finance_control.db
 *serviceAccount*.json
 *firebase-adminsdk*.json
 
+# Build PyInstaller
+dist/
+build/
+*.spec.bak
+
 # Ambientes virtuais
 venv/
 .venv/
