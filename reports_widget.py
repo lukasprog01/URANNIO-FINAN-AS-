@@ -12,7 +12,7 @@ try:
     from matplotlib.figure import Figure
     import matplotlib.pyplot as plt
     HAS_MATPLOTLIB = True
-except ImportError:
+except Exception:
     HAS_MATPLOTLIB = False
 
 
